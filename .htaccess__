@@ -1,0 +1,23 @@
+-------------------------------------
+
+; заставить открываться ссылки без слешей на конце
+<IfModule mod_rewrite.c>
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-l
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_URI} ^(.*/[^/\.]+)$
+  RewriteRule ^(.*)$ http://%{HTTP_HOST}/$1/ [R=301,L] 
+</IfModule>
+
+-------------------------------------
+
+; постраничный редирект с http на https для всех страниц сайта
+http://site.ru/path/to/page -> https://site.ru/path/to/page
+; вставить внутрь этого условия, чтобы правило подключилось до urlrewrite.php
+<IfModule mod_rewrite.c>
+
+  RewriteCond %{HTTPS} off
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+-------------------------------------
