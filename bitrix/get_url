@@ -1,0 +1,2 @@
+= $APPLICATION->GetCurUri(); // путь с параметрами относительно корня
+= $APPLICATION->GetCurUrl(); // путь без параметров
